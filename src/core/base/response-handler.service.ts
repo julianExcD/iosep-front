@@ -1,5 +1,5 @@
 import type { AxiosResponse } from 'axios'
-import type { APIResponse, ResponseDTO } from '@/core/types/service-response'
+import type { APIResponse, ResponseDTO } from '@/shared/types/service-response'
 
 export class ResponseHandler {
   static handleWithDTO<T>(
