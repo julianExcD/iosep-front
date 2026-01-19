@@ -1,5 +1,5 @@
 import { AxiosError } from 'axios'
-import type { APIErrorMetadata, APIResponse, ErrorResponseData, ErrorType } from '@/core/types/service-response.ts'
+import type { APIErrorMetadata, APIResponse, ErrorResponseData, ErrorType } from '@/shared/types/service-response.ts'
 import { ErrorLogger } from './error-logger.service.ts'
 import { ErrorStatusMapper } from '@/app/mappers/error-status.mapper.ts'
 

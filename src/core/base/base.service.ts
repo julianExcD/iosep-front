@@ -1,6 +1,6 @@
 import { api } from '../http/axios-instance.ts'
 import type { AxiosInstance } from 'axios'
-import type { APIResponse, ResponseDTO, PostArgs } from '@/core/types/service-response.ts'
+import type { APIResponse, ResponseDTO, PostArgs } from '@/shared/types/service-response.ts'
 import { ErrorHandler } from './error-handler.service.ts'
 import { ResponseHandler } from './response-handler.service.ts'
 
