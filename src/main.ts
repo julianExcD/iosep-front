@@ -8,6 +8,7 @@ import router from './app/router/index'
 import PrimeVue from 'primevue/config'
 import MyPreset from './app/config/myPreset.ts'
 import { localeOptions } from './app/config/primevue-locale.ts'
+import 'primeicons/primeicons.css'
 
 // PrimeVue Services
 import ToastService from 'primevue/toastservice'
@@ -25,7 +26,7 @@ const primeVueConfig = {
     preset: MyPreset,
     options: {
       prefix: 'p',
-      darkModeSelector: false,
+      darkModeSelector: '.dark',
       cssLayer: false,
     },
   },
