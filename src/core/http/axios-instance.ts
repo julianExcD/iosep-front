@@ -12,7 +12,7 @@ const normalizeUrl = (url: string): string => {
 }
 
 export const apiBaseUrl = normalizeUrl(
-  (import.meta.env.VITE_API_LOCAL as string | undefined) ?? // Desarrollo local
+  // (import.meta.env.VITE_API_LOCAL as string | undefined) ?? // Desarrollo local
   (import.meta.env.VITE_API_PROD as string | undefined) ??  // Producción
   ''
 )
@@ -54,7 +54,7 @@ function handleAuthError(error: any) {
     const requestUrl = error.config?.url || ''
     const shouldLogout =
       currentToken &&
-      !requestUrl.includes('/login') &&
+      !requestUrl.includes('/auth/login') &&
       error.config?.headers?.Authorization
 
     if (shouldLogout) {
@@ -62,7 +62,7 @@ function handleAuthError(error: any) {
         localStorage.removeItem('token')
         
         alert('Tu sesión ha expirado. Serás redirigido al login.')
-        window.location.href = '/login'
+        window.location.href = '/auth/login'
       }, 500)
     }
   }
