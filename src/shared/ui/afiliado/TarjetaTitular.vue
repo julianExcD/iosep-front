@@ -1,24 +1,38 @@
 <template>
-  <Panel header="Busqueda Afiliado" :toggleable="true" ref="panel" v-model:collapsed="isCollapsed">
+  <Panel
+    header="Busqueda Afiliado"
+    :toggleable="true"
+    ref="panel"
+    v-model:collapsed="isCollapsed"
+    :pt="{
+      root: { class: 'border border-slate-200 bg-white text-slate-900 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100' },
+      header: { class: 'border-b border-slate-200 bg-white text-slate-900 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100' },
+      title: { class: 'text-slate-900 dark:text-slate-100' },
+      content: { class: 'bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-100' },
+      toggler: { class: 'text-slate-700 hover:text-slate-900 dark:text-slate-200 dark:hover:text-white' }
+    }"
+  >
     <template #icons>
-      <Tag> ({{ cuil }} | {{ nombre }})</Tag>
+      <Tag class="bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200">({{ cuil }} | {{ nombre }})</Tag>
     </template>
     <div class="grid grid-cols-3 gap-2">
       <div class="col-span-3 hidden sm:block">
-        <h5 class="flex items-center gap-1"><i class="pi pi-credit-card"></i>Tarjeta</h5>
+        <h5 class="flex items-center gap-1 text-slate-800 dark:text-slate-100">
+          <i class="pi pi-credit-card text-slate-600 dark:text-slate-300"></i>
+          Tarjeta
+        </h5>
         <Textarea
           v-model="tarjeta"
           rows="2"
           cols="60"
-          class="text-xs w-full"
-          style="color: transparent; text-shadow: 0 0 8px rgba(0,0,0,0.5);"
+          class="text-xs w-full tarjeta-masked dark:bg-slate-900 dark:text-slate-100 dark:border-slate-700"
           @keyup.enter="callTarjeta"
           :disabled="bloquear"
         />
       </div>
       <div class="col-span-1">
         <div class="field">
-          <label for="cuil">CUIL</label>
+          <label for="cuil" class="text-sm font-medium text-slate-700 dark:text-slate-200">CUIL</label>
           <AutoComplete
             name="cuil"
             v-model="datos"
@@ -28,6 +42,7 @@
             forceSelection
             :delay="1000"
             class="w-full rounded-md noboton"
+            inputClass="w-full dark:bg-slate-900 dark:text-slate-100 dark:border-slate-700"
             ref="input_cuil"
             :dropdown="true"
             @item-select="completeInfo"
@@ -41,8 +56,12 @@
                     :class="{
                       'bg-red-100': slotProps.option.idMotivoBaja !== 0,
                       'text-red-800': slotProps.option.idMotivoBaja !== 0,
+                      'dark:bg-rose-500/20': slotProps.option.idMotivoBaja !== 0,
+                      'dark:text-rose-200': slotProps.option.idMotivoBaja !== 0,
                       'bg-green-100': slotProps.option.idMotivoBaja === 0,
                       'text-green-800': slotProps.option.idMotivoBaja === 0,
+                      'dark:bg-emerald-500/20': slotProps.option.idMotivoBaja === 0,
+                      'dark:text-emerald-200': slotProps.option.idMotivoBaja === 0,
                     }"
                     class="text-xs font-semibold mr-2 px-2.5 py-0.5 rounded"
                   >
@@ -52,7 +71,7 @@
                 </div>
                 <div>
                   <div v-if="slotProps.option.titular">
-                    <Tag class="mr-2" icon="pi pi-user" value="Titular"></Tag>
+                    <Tag class="mr-2 dark:bg-slate-800 dark:text-slate-200" icon="pi pi-user" value="Titular"></Tag>
                   </div>
                 </div>
                 <div>
@@ -67,20 +86,38 @@
       </div>
       <div class="col-span-2">
         <div class="field">
-          <label for="cuildata">NOMBRE</label>
-          <InputText v-model="nombre" class="w-full" id="cuildata" type="text" disabled />
+          <label for="cuildata" class="text-sm font-medium text-slate-700 dark:text-slate-200">NOMBRE</label>
+          <InputText
+            v-model="nombre"
+            class="w-full dark:bg-slate-900 dark:text-slate-100 dark:border-slate-700 disabled:dark:text-slate-300"
+            id="cuildata"
+            type="text"
+            disabled
+          />
         </div>
       </div>
       <div class="col-span-1">
         <div class="field">
-          <label for="titular">TITULAR</label>
-          <InputText v-model="titular" class="w-full" id="titular" type="text" disabled />
+          <label for="titular" class="text-sm font-medium text-slate-700 dark:text-slate-200">TITULAR</label>
+          <InputText
+            v-model="titular"
+            class="w-full dark:bg-slate-900 dark:text-slate-100 dark:border-slate-700 disabled:dark:text-slate-300"
+            id="titular"
+            type="text"
+            disabled
+          />
         </div>
       </div>
       <div class="col-span-2">
         <div class="field">
-          <label for="titulardata">NOMBRE</label>
-          <InputText v-model="nombre2" class="w-full" id="titulardata" type="text" disabled />
+          <label for="titulardata" class="text-sm font-medium text-slate-700 dark:text-slate-200">NOMBRE</label>
+          <InputText
+            v-model="nombre2"
+            class="w-full dark:bg-slate-900 dark:text-slate-100 dark:border-slate-700 disabled:dark:text-slate-300"
+            id="titulardata"
+            type="text"
+            disabled
+          />
         </div>
       </div>
       <div class="col-span-1 grid grid-cols-2">
@@ -230,3 +267,14 @@ watch(tarjeta, (newValue) => {
   }
 });
 </script>
+
+<style scoped>
+.tarjeta-masked {
+  color: transparent;
+  text-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+}
+
+:global(.dark) .tarjeta-masked {
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+}
+</style>

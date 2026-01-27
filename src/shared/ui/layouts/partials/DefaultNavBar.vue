@@ -19,21 +19,35 @@
           rounded
           :icon="isDark ? 'pi pi-sun' : 'pi pi-moon'"
           aria-label="Cambiar tema"
+          class="text-slate-700 hover:text-slate-900 dark:text-slate-100 dark:hover:text-white"
           @click="toggleTheme"
         />
         <Button
-          class="md:hidden"
           severity="secondary"
           text
           rounded
           :icon="isMenuOpen ? 'pi pi-times' : 'pi pi-bars'"
           aria-label="Abrir menu"
+          class="md:hidden text-slate-700 hover:text-slate-900 dark:text-slate-100 dark:hover:text-white"
           @click="toggleMenu"
         />
       </div>
     </nav>
 
-    <Drawer v-model:visible="isMenuOpen" position="right" class="w-full sm:w-80 md:hidden" :blockScroll="true">
+    <Drawer
+      v-model:visible="isMenuOpen"
+      position="right"
+      class="w-full sm:w-80 md:hidden"
+      :blockScroll="true"
+      :pt="{
+        mask: { class: 'backdrop-blur-sm bg-slate-900/40 dark:bg-slate-950/70' },
+        root: { class: 'bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-100' },
+        header: { class: 'border-b border-slate-200 dark:border-slate-700' },
+        content: { class: 'bg-red text-slate-900 dark:bg-slate-900 dark:text-slate-100' },
+        footer: { class: 'border-t border-slate-200 dark:border-slate-700' },
+        pcCloseButton: { class: 'text-slate-700 hover:text-slate-900 dark:text-slate-200 dark:hover:text-white' }
+      }"
+    >
       <template #header>
         <div class="flex items-center gap-2">
           <span class="font-bold">{{ user }}</span>

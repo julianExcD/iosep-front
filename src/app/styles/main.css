@@ -60,6 +60,167 @@ h1 {
   color: #F8FAFC;
 }
 
+.dark .p-panel {
+  background: #0F172A;
+  color: #F8FAFC;
+  border-color: #334155;
+}
+
+.dark .p-panel-header {
+  background: #0F172A;
+  color: #F8FAFC;
+  border-color: #334155;
+}
+
+.dark .p-panel-title {
+  color: #F8FAFC;
+}
+
+.dark .p-panel-content {
+  background: #0B1220;
+  color: #F8FAFC;
+}
+
+.dark .p-inputtext,
+.dark .p-textarea,
+.dark .p-autocomplete-input {
+  background: #0F172A;
+  color: #F8FAFC;
+  border-color: #334155;
+}
+
+.dark .p-inputtext:disabled,
+.dark .p-textarea:disabled,
+.dark .p-autocomplete-input:disabled {
+  background: #0F172A;
+  color: #CBD5E1;
+}
+
+.dark .p-drawer {
+  background: #0F172A;
+  color: #F8FAFC;
+}
+
+.dark .p-drawer-header,
+.dark .p-drawer-content,
+.dark .p-drawer-footer {
+  background: #0F172A;
+  color: #F8FAFC;
+  border-color: #334155;
+}
+
+.dark .p-button.p-button-text .p-button-icon {
+  color: #F8FAFC;
+}
+
+.dark .p-select-overlay,
+.dark .p-autocomplete-overlay,
+.dark .p-datepicker-panel,
+.dark .p-overlaypanel {
+  background: #0F172A;
+  color: #F8FAFC;
+  border-color: #334155;
+}
+
+.dark .p-select-list,
+.dark .p-autocomplete-list,
+.dark .p-select-option-group,
+.dark .p-select-option-group-label,
+.dark .p-autocomplete-option-group {
+  background: #0F172A;
+  color: #F8FAFC;
+}
+
+.dark .p-select-option,
+.dark .p-autocomplete-option {
+  color: #E2E8F0;
+}
+
+.dark .p-select-option.p-focus,
+.dark .p-autocomplete-option.p-focus,
+.dark .p-select-option:hover,
+.dark .p-autocomplete-option:hover {
+  background: #1E293B;
+  color: #F8FAFC;
+}
+
+.dark .p-select-option.p-select-option-selected,
+.dark .p-autocomplete-option.p-autocomplete-option-selected {
+  background: #0C4A6E;
+  color: #E0F2FE;
+}
+
+.dark .p-select-header,
+.dark .p-autocomplete-header {
+  background: #0F172A;
+  border-color: #334155;
+  color: #F8FAFC;
+}
+
+.dark .p-select-filter,
+.dark .p-autocomplete-filter {
+  background: #0F172A;
+  color: #F8FAFC;
+  border-color: #334155;
+}
+
+.dark .p-datepicker-header,
+.dark .p-datepicker-calendar,
+.dark .p-datepicker-day-view,
+.dark .p-datepicker-month-view,
+.dark .p-datepicker-year-view {
+  background: #0F172A;
+  color: #F8FAFC;
+}
+
+.dark .p-datepicker-title,
+.dark .p-datepicker-select-month,
+.dark .p-datepicker-select-year,
+.dark .p-datepicker-decade {
+  color: #F8FAFC;
+}
+
+.dark .p-datepicker-weekday {
+  color: #94A3B8;
+}
+
+.dark .p-datepicker-day,
+.dark .p-datepicker-month,
+.dark .p-datepicker-year {
+  color: #E2E8F0;
+}
+
+.dark .p-datepicker-day:hover,
+.dark .p-datepicker-month:hover,
+.dark .p-datepicker-year:hover {
+  background: #1E293B;
+  color: #F8FAFC;
+}
+
+.dark .p-datepicker-day-selected,
+.dark .p-datepicker-month-selected,
+.dark .p-datepicker-year-selected {
+  background: #0C4A6E;
+  color: #E0F2FE;
+}
+
+.dark .p-datepicker-day-selected-range {
+  background: rgba(12, 74, 110, 0.4);
+  color: #E0F2FE;
+}
+
+.dark .p-datepicker-other-month {
+  color: #64748B;
+}
+
+.dark .p-datepicker-today {
+  border-color: #38BDF8;
+}
+
+.dark .p-datepicker-buttonbar {
+  border-color: #334155;
+}
+
 @theme {
   --color-primary: #0C599E;
   --color-primary-deep: #13248D;
