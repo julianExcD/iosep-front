@@ -113,9 +113,7 @@ export const useCtaCteStore = defineStore('ctacte', () => {
   };
 
   const cargarMovimientos = async (esEmpresa: boolean): Promise<MovimientoGrupo[]> => {
-    console.log("esEmpresa",esEmpresa)
     const response = await service.fetchMovimientos(esEmpresa);
-    console.log(response)
     return unwrapResponse(response, []);
   };
 

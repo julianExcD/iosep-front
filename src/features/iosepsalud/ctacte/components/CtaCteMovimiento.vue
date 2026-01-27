@@ -163,7 +163,7 @@ import { useCtaCteStore } from '../store/ctacte.store';
 import LoadingOverlay from '@/shared/ui/LoadingOverlay.vue';
 
 const props = defineProps<{ idAfiliado: number; idEmpresa: number }>();
-const emit = defineEmits<{ save: [unknown] }>();
+const emit = defineEmits<{ save: [any] }>();
 
 const toast = useToast();
 const store = useCtaCteStore();

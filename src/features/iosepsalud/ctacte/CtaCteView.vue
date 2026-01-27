@@ -239,7 +239,7 @@
       :style="{ width: '50vw' }"
       :modal="true"
     >
-      <CtaCteMovimiento :idAfiliado="data.idAfiliado" :idEmpresa="data.idEmpresa" @click="graboMovimiento" />
+      <CtaCteMovimiento :idAfiliado="data.idAfiliado" :idEmpresa="data.idEmpresa" @save="graboMovimiento" />
     </Dialog>
 
     <Dialog
@@ -310,7 +310,6 @@ import DatePicker from 'primevue/datepicker';
 import Dialog from 'primevue/dialog';
 import { FilterMatchMode } from '@primevue/core/api';
 import Tag from 'primevue/tag';
-import BlockUI from 'primevue/blockui';
 import VuePdfEmbed from 'vue-pdf-embed';
 import printJS from 'print-js';
 import { useRouter } from 'vue-router';
@@ -462,7 +461,7 @@ const setModal = (modal: 'viejo' | 'movimiento' | 'grupoFamiliar' | 'imprimir', 
 };
 
 const graboMovimiento = (info: CtaCteItem[]) => {
-  dataModel.value = info;
+  dataModel.value = Array.isArray(info) ? info : [];
   setModal('movimiento', false);
 };
 
