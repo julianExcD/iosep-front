@@ -9,11 +9,13 @@ import {
 import HomeRoute from '@/features/home/routes'
 import LoginRoute from '@/features/auth/login/routes'
 import CtaCteRoute from '@/features/iosepsalud/ctacte/route'
+import ExtrajudicialRoute from '@/features/creditos/extrajudicial/route'
 
 const routes: RouteRecordRaw[] = [
   { ...LoginRoute },
   { ...HomeRoute },
   { ...CtaCteRoute },
+  { ...ExtrajudicialRoute },
   { path: '/:pathMatch(.*)*', redirect: '/' },
 ]
 

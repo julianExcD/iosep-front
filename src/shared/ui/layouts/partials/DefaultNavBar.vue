@@ -67,7 +67,14 @@
             :class="navLinkClass('/iosepsalud/ctacte')"
             @click="closeMenu"
           >
-            Cuenta Corriente
+            Cuenta Corriente - IOSEP Salud
+          </router-link>
+          <router-link
+            to="/creditos/extrajudicial"
+            :class="navLinkClass('/creditos/extrajudicial')"
+            @click="closeMenu"
+          >
+            Extrajudicial - Sis. Cred.
           </router-link>
         </div>
 
