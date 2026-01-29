@@ -1,11 +1,16 @@
-# IOSEP - FRONTEND - VUE
+# Frontend Vue
 
-Este proyecto unifica los modulos de IOSEP existentes (Iosep Salud y Sistema de Creditos), con escalabilidad para futuras implementaciones.
-Esta estructurado con una **arquitectura por capas / feature-first** explicado en este README si se quiere implementar nuevos modulos.
+Proyecto frontend basado en:
+
+- Vue 3 + TypeScript
+- Vite
+- Pinia
+- Vue Router
+- PrimeVue
 
 ## Requisitos
 
-- Node 20+
+- Node.js 20+
 - npm
 
 ## Inicio rápido
@@ -23,104 +28,116 @@ npm run build
 npm run preview
 ```
 
-## Estructura por capas
+## Arquitectura
+
+El proyecto usa una estructura por capas con enfoque feature-first:
 
 ```text
 src/
-├─ app/              # Composición y configuración de la aplicación
-├─ core/             # Infraestructura técnica transversal
-├─ features/         # Funcionalidades organizadas por dominio
-├─ shared/           # Reutilizables y contratos comunes
-├─ assets/           # Recursos estáticos
-├─ App.vue           # Shell principal
-└─ main.ts           # Bootstrap de la aplicación
+├─ app/          # Shell de la aplicación (composición global)
+├─ core/         # Infra transversal (cross-feature)
+├─ features/     # Features-first (por dominio)
+├─ shared/       # Reutilizables cross-feature
+└─ assets/       # Recursos estáticos
 ```
 
 ### Capa `app/`
 
-Responsable de **configurar y orquestar** la aplicación. *NO debe contener lógica de negocio*
+`src/app` contiene el wiring global (sin lógica de negocio):
 
-- `app/config/`: configuraciones (ej. PrimeVue, temas, locale, etc.).
-- `app/router/`: router raíz y guards globales.
-- `app/styles/`: estilos globales.
-- `app/mappers/`: mapeos transversales (ej. normalización de errores).
+```text
+src/app/
+├─ bootstrap/    # init: plugins, config global (PrimeVue, Pinia, etc.)
+├─ layout/       # layout global (header/sidebar/footer)
+├─ router/       # router raíz y guards globales
+├─ providers/    # providers globales (toast, confirm, dialog, etc.)
+├─ styles/       # css global
+└─ index.ts      # exports del shell
+```
 
-**Ejemplo**: el router principal se define en `app/router/index.ts` y consume rutas definidas en `features/<feature>/routes.ts`.
+Puntos clave:
+
+- `src/main.ts` delega en `createApplication()`.
+- La config de PrimeVue vive en `src/app/bootstrap/primevue`.
+- Los servicios globales (Toast/Confirm) se registran en `src/app/providers`.
 
 ### Capa `core/`
 
-Infraestructura técnica reutilizable y agnóstica del dominio.
+Infraestructura transversal (cross-feature), agnóstica del dominio:
 
-- `core/http/axios-instance.ts`: instancia de Axios con configuración base.
-- `core/base/`: servicios base para estandarizar respuestas, errores y logging.
-  - `base.service.ts` define métodos `get`, `post`, `put`, `delete` con tipado homogéneo.
-  - `error-handler.service.ts` y `response-handler.service.ts` normalizan errores/respuestas.
+```text
+src/core/
+├─ http/      # cliente HTTP + interceptors + typing base
+├─ auth/      # manejo de sesión/token/guards (si aplica)
+├─ storage/   # wrapper localStorage/sessionStorage
+├─ config/    # env, endpoints, feature flags
+├─ logging/   # logger (opcional)
+└─ errors/    # errores comunes y mapeos (ApiError, etc.)
+```
+
+Ejemplos actuales:
+
+- `src/core/http/axios-instance.ts`: instancia de Axios.
+- `src/core/http/base.service.ts`: helpers base para servicios HTTP.
+- `src/core/errors/error-handler.service.ts`: normaliza errores.
 
 ### Capa `features/`
 
-Organiza el **dominio por funcionalidades**. Cada feature puede agrupar vistas, componentes, stores,
-servicios y rutas propias.
-
-- Ejemplo actual: `features/home/views/Home.vue` representa la vista de Home.
-
-**Sugerencia de convención (por feature):**
+Cada feature es autocontenida y se organiza por capas:
 
 ```text
-features/
-└─ home/
-   ├─ views/        # Vistas asociadas a rutas
-   ├─ components/   # Componentes propios del feature
-   ├─ store/        # Store Pinia del feature
-   ├─ api/          # Servicios HTTP del dominio
-   └─ routes.ts     # Rutas del feature
+src/features/
+└─ <feature>/
+   ├─ index.ts              # barrel opcional del feature (exports)
+   ├─ domain/                # Núcleo del feature: reglas y modelos de negocio
+   │  ├─ models/             # tipos del dominio
+   │  └─ contracts/          # puertos/interfaces (repositories, gateways)
+   ├─ application/           # Casos de uso (orquestación)
+   │  ├─ use-cases/          # acciones: listar, crear, editar, etc.
+   │  └─ dtos/               # shapes request/response (si aplica)
+   ├─ infrastructure/        # Adaptadores: API/repos concretos, mappers hacia dominio
+   │  ├─ api/                # llamadas HTTP específicas del feature
+   │  ├─ repositories/       # implementaciones de contracts (ej. ProviderRepoApi)
+   │  └─ mappers/            # transformaciones API <-> dominio
+   └─ presentation/          # UI + routing del feature
+      ├─ views/              # vistas asociadas a rutas
+      ├─ components/         # componentes propios del feature
+      ├─ store/              # store Pinia del feature
+      ├─ composables/        # hooks específicos del feature (opcional)
+      └─ routes.ts           # rutas del feature
 ```
 
-**Responsabilidades:**
+Notas:
 
-- `views`: orquestan UI, stores y componentes
-- `components`: UI específica del feature
-- `store`: estado y lógica de aplicación (Pinia)
-- `api`: integración HTTP del dominio
-- `routes.ts`: definición de rutas del feature
+- `domain/` no depende de Vue ni de HTTP.
+- `application/` usa `domain/` y define los casos de uso.
+- `infrastructure/` implementa contratos (ej. repositorios HTTP).
+- `presentation/` contiene lo UI (router, views, components, store).
 
 ### Capa `shared/`
 
-Elementos **reutilizables** y contratos comunes.
+Reutilizables cross-feature (sin acoplar dominios):
 
-- `shared/ui/`: componentes UI compartidos.
-- `shared/types/`: tipos y contratos comunes.
-- `shared/composables/`: lógica reutilizable basada en Composition API.
-- `shared/utils/`: funciones puras reutilizables, sin dependencias de Vue.
-
-### Otros archivos clave
-
-- `main.ts`: bootstrap general (Pinia, Router, PrimeVue, servicios globales).
-- `App.vue`: contenedor principal con `<router-view />`.
-
-## Convenciones de estructura
-- views no llaman a servicios
-- composables (funciones con vue) y utils (funciones puras, sin vue)
-- api/store por feature
+```text
+src/shared/
+├─ ui/          # componentes tontos (sin negocio, sin API)
+├─ components/  # componentes reutilizables de composición (mínima lógica)
+├─ composables/ # hooks genéricos (no específicos de un feature)
+├─ utils/       # helpers puros (formatters, validators simples, etc.)
+├─ constants/   # constantes globales (rutas, keys, etc.)
+└─ types/       # tipos compartidos NO-dominio (Paginated<T>, Option, etc.)
+```
 
 ## Convenciones de importación
 
-Se utiliza el alias `@` para apuntar a `src/`. Ejemplo:
+Se utiliza el alias `@` para apuntar a `src`.
 
 ```ts
-import DefaultLayout from '@/shared/ui/layouts/Default.vue'
+import DefaultLayout from '@/app/layout/Default.vue'
 ```
 
-## Reglas y Recomendaciones
+## Reglas y recomendaciones
 
 - No llamar APIs directamente desde componentes o vistas.
-- Centralizar la integración HTTP en **core** y **features/<x>/api**
-- Mantener UI reutilizable en **shared/ui**
-- Agrupar lógica de negocio y estado por feature
-- Usar **utils** solo para funciones puras
-- Usar **composables** solo cuando haya reactividad de Vue
-
-## Objetivo de la arquitectura
-- Código predecible y mantenible
-- Features autocontenidos
-- Escalabilidad sin acoplamiento
-- Onboarding simple para nuevos desarrolladores
+- Centralizar la integración HTTP en `core` y `features/<feature>/infrastructure/api`.
+- Mantener UI reutilizable en `shared/ui`.

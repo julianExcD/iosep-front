@@ -1,4 +1,5 @@
 import type { AxiosResponse } from 'axios'
+
 import type { APIResponse, ResponseDTO } from '@/shared/types/service-response'
 
 export class ResponseHandler {
@@ -9,7 +10,7 @@ export class ResponseHandler {
     this.validateResponse(response)
 
     return {
-      success: response.data.isSuccess ,
+      success: response.data.isSuccess,
       content: response.data.items ?? defaultValue,
       status: response.status,
       error: response.data.error,
@@ -25,7 +26,7 @@ export class ResponseHandler {
 
     return {
       success: response.status === 200,
-      content: content,
+      content,
       status: response.status,
       error: response.statusText,
     }
@@ -37,3 +38,4 @@ export class ResponseHandler {
     }
   }
 }
+

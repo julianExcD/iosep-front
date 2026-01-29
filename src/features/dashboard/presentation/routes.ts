@@ -1,17 +1,15 @@
 import type { RouteRecordRaw } from 'vue-router'
 
 import Default from '@/app/layout/Default.vue'
-import HomeView from './presentation/views/Home.vue'
+import DashboardView from './views/Dashboard.vue'
 
 const meta = { requiresAuth: false }
 
 const route: RouteRecordRaw = {
-  path: '/',
+  path: '/dashboard',
   component: Default,
-  children: [
-    { path: '', redirect: 'home' },
-    { path: 'home', meta, component: HomeView },
-  ],
+  children: [{ path: '', meta, component: DashboardView }],
 }
 
 export default route
+

@@ -1,7 +1,8 @@
 import { AxiosError } from 'axios'
-import type { APIErrorMetadata, APIResponse, ErrorResponseData, ErrorType } from '@/shared/types/service-response.ts'
-import { ErrorLogger } from './error-logger.service.ts'
-import { ErrorStatusMapper } from '@/app/mappers/error-status.mapper.ts'
+
+import type { APIErrorMetadata, APIResponse, ErrorResponseData, ErrorType } from '@/shared/types/service-response'
+import { ErrorLogger } from '@/core/logging/error-logger.service'
+import { ErrorStatusMapper } from './mappers/error-status.mapper'
 
 export class ErrorHandler {
   private static createMetadata(errorType: ErrorType = 'UNKNOWN'): APIErrorMetadata {
@@ -11,11 +12,7 @@ export class ErrorHandler {
     }
   }
 
-  private static handleAxiosError<T>(
-    error: AxiosError,
-    context: string,
-    metadata: APIErrorMetadata
-  ): APIResponse<T> {
+  private static handleAxiosError<T>(error: AxiosError, context: string, metadata: APIErrorMetadata): APIResponse<T> {
     metadata.errorType = 'API'
     metadata.path = error.config?.url
     metadata.method = error.config?.method?.toUpperCase()
@@ -44,11 +41,7 @@ export class ErrorHandler {
     }
   }
 
-  private static handleStandardError<T>(
-    error: Error,
-    context: string,
-    metadata: APIErrorMetadata
-  ): APIResponse<T> {
+  private static handleStandardError<T>(error: Error, context: string, metadata: APIErrorMetadata): APIResponse<T> {
     metadata.errorType = 'UNEXPECTED'
 
     ErrorLogger.log(
@@ -89,11 +82,7 @@ export class ErrorHandler {
     }
   }
 
-  static handleServiceError<T>(
-    error: unknown,
-    emptyContent: T,
-    serviceName = 'Unknown Service'
-  ): APIResponse<T> {
+  static handleServiceError<T>(error: unknown, emptyContent: T, serviceName = 'Unknown Service'): APIResponse<T> {
     if (this.isAxiosError(error)) {
       return this.handleServiceAxiosError(error, emptyContent)
     }
@@ -124,11 +113,7 @@ export class ErrorHandler {
     }
   }
 
-  private static handleServiceStandardError<T>(
-    error: Error,
-    emptyContent: T,
-    serviceName: string
-  ): APIResponse<T> {
+  private static handleServiceStandardError<T>(error: Error, emptyContent: T, serviceName: string): APIResponse<T> {
     ErrorLogger.log('UNEXPECTED_ERROR', serviceName, error, new Date().toISOString())
 
     return {
@@ -145,9 +130,7 @@ export class ErrorHandler {
   ): string {
     if (!responseData) return error.message
 
-    return (
-      responseData.error ?? responseData.message ?? error.message ?? 'An unexpected error occurred'
-    )
+    return responseData.error ?? responseData.message ?? error.message ?? 'An unexpected error occurred'
   }
 
   static isAxiosError(error: unknown): error is AxiosError {
@@ -158,3 +141,4 @@ export class ErrorHandler {
     return this.isAxiosError(error) && error.code === 'ERR_NETWORK'
   }
 }
+

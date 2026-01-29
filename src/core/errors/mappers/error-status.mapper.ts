@@ -12,3 +12,4 @@ export class ErrorStatusMapper {
     return this.errorTypes[error.name] || 500
   }
 }
+

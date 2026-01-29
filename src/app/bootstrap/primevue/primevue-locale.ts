@@ -1,4 +1,4 @@
-import type { PrimeVueLocaleOptions } from 'primevue/config';
+import type { PrimeVueLocaleOptions } from 'primevue/config'
 
 export const localeOptions: PrimeVueLocaleOptions = {
   startsWith: 'Comenzar con',
@@ -7,7 +7,7 @@ export const localeOptions: PrimeVueLocaleOptions = {
   endsWith: 'Termina con',
   equals: 'Iguales',
   notEquals: 'No iguales',
-  noFilter: 'No Filtrar',
+  noFilter: 'No filtrar',
   lt: 'Menor que',
   lte: 'Menor o igual a',
   gt: 'Mayor que',
@@ -27,14 +27,27 @@ export const localeOptions: PrimeVueLocaleOptions = {
   choose: 'Elegir',
   upload: 'Subir',
   cancel: 'Cancelar',
-  dayNames: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
-  dayNamesShort: ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
-  dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
-  monthNames: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
-  monthNamesShort: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
+  dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+  dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+  dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+  monthNames: [
+    'Enero',
+    'Febrero',
+    'Marzo',
+    'Abril',
+    'Mayo',
+    'Junio',
+    'Julio',
+    'Agosto',
+    'Septiembre',
+    'Octubre',
+    'Noviembre',
+    'Diciembre',
+  ],
+  monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
   today: 'Hoy',
   weekHeader: 'Wk',
-  fileSizeTypes: ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"],
+  fileSizeTypes: ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
   firstDayOfWeek: 1,
   dateFormat: 'dd/mm/yy',
   weak: 'Débil',
@@ -42,5 +55,6 @@ export const localeOptions: PrimeVueLocaleOptions = {
   strong: 'Fuerte',
   passwordPrompt: 'Ingrese contraseña',
   emptyFilterMessage: 'No se han encontrado resultados',
-  emptyMessage: 'Sin opciones disponibles'
-};
+  emptyMessage: 'Sin opciones disponibles',
+}
+

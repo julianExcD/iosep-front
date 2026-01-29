@@ -1,8 +1,9 @@
-import { api } from '../http/axios-instance.ts'
 import type { AxiosInstance } from 'axios'
-import type { APIResponse, ResponseDTO, PostArgs } from '@/shared/types/service-response.ts'
-import { ErrorHandler } from './error-handler.service.ts'
-import { ResponseHandler } from './response-handler.service.ts'
+
+import { api } from './axios-instance'
+import type { APIResponse, PostArgs, ResponseDTO } from '@/shared/types/service-response'
+import { ErrorHandler } from '@/core/errors/error-handler.service'
+import { ResponseHandler } from './response-handler.service'
 
 export abstract class BaseService {
   protected constructor(
@@ -47,11 +48,7 @@ export abstract class BaseService {
     }
   }
 
-  protected async put<T>(
-    endpoint: string,
-    payload: unknown,
-    defaultValue: T
-  ): Promise<APIResponse<T>> {
+  protected async put<T>(endpoint: string, payload: unknown, defaultValue: T): Promise<APIResponse<T>> {
     try {
       const response = await this.client.put<ResponseDTO<T>>(`${this.baseURL}/${endpoint}`, payload)
       return ResponseHandler.handleWithDTO<T>(response, defaultValue)
@@ -60,10 +57,7 @@ export abstract class BaseService {
     }
   }
 
-  protected async delete<T>(
-    endpoint: string,
-    defaultValue: T
-  ): Promise<APIResponse<T>> {
+  protected async delete<T>(endpoint: string, defaultValue: T): Promise<APIResponse<T>> {
     try {
       const response = await this.client.delete<ResponseDTO<T>>(`${this.baseURL}/${endpoint}`)
       return ResponseHandler.handleWithDTO<T>(response, defaultValue)
@@ -72,3 +66,4 @@ export abstract class BaseService {
     }
   }
 }
+
